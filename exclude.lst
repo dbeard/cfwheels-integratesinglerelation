@@ -3,3 +3,4 @@ build/*
 exclude.lst
 rakefile
 README.markdown
+.gitignore
