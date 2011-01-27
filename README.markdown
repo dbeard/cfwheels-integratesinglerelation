@@ -30,6 +30,11 @@ Depending on the application, you might want to combine these properties togethe
 * classid
 * etc
 
+Building From Source
+--------------------
+
+	rake build
+
 History
 ------------
 
