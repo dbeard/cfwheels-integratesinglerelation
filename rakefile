@@ -1,0 +1,26 @@
+#Rakefile for integratesinglerelation plugin for cfwheels
+require 'rake/clean'
+CLEAN.include('build')
+
+PLUGIN_VERSION = 0.1
+
+desc 'Build the version number specified (defaults to current codebase)'
+task :build, :version, :needs => ['index.cfm'] do |t,args|
+  #This doesn't work currently, since we have no repo
+  args.with_defaults(:version => PLUGIN_VERSION)
+  
+  puts "Building Version: #{args.version}"
+  
+  mkdir_p "build/"
+  
+  sh %{zip -r build/integratesinglerelation-#{args.version}.zip * -x@exclude.lst} do |ok, res|
+    if ! ok
+      abort("Unable to create zip file")
+    end
+  end
+  
+end
+
+file "index.cfm" => ["README.markdown"] do |t|
+  sh "rdiscount #{t.prerequisites[0]} > #{t.name}"
+end
