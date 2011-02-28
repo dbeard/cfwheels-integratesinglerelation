@@ -31,9 +31,16 @@
 			if(integrateSingleRelation){
 				//Loop through the structures, and integrate if the key exists
 				for (i=1;i lte ArrayLen(ret);i++) {
-					if(StructKeyExists(ret[i],arguments.include)){
-						StructAppend(ret[i],ret[i][arguments.include]);
-						StructDelete(ret[i],arguments.include);
+					for(j=1; j lte listLen(include); j++){
+						included = listGetAt(arguments.include,j);
+						
+						if(StructKeyExists(ret[i],included)){
+							//Make sure it is not an array
+							if(!isArray(ret[i][included])){
+								StructAppend(ret[i],ret[i][included]);
+								StructDelete(ret[i],included);
+							}
+						}
 					}
 				}
 			}
